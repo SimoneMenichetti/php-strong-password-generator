@@ -1,38 +1,17 @@
 <?php
 
 // includiamo la pagina function.php
+include 'function_bonus.php';
 
-include 'function.php';
+// miles bonus 3 
+// logica
+// inizializzare la sessione 
+// memorizzare i dati della password generata
 
-    // // inizializzo una funzione per generare automaticamente una password
-    // function CreateRandomPassword($length){
-    //     // caratteri/simboli possibili ammessi nelle password
-    //     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+';
-    //     // password campo da popolare
-    //     $password= '';
-    //     // lunghezza della password 
-    //     $charactersLength = strlen($characters);
 
-    //     // inseriamo un controllo della lunghezza dei caratteri 
-    //     // var_dump($charactersLength);
-
-    //     // inizializiamo un ciclo for per generare casualmente la password
-
-    //     for($i = 0; $i < $length; $i++){
-    //         // utilizziamo rand per dare un valore minimo ed un massimo x i caratteri casuali da selezionare
-    //         $randomI=rand(0,$charactersLength-1);
-    //         // controllo del valore var indice random
-    //         // var_dump($randomI);
-
-    //         $password .= $characters[$randomI];
-
-    //         // controllo password
-    //         // var_dump($password);
-    //     }
-
-    //     // ritorniamo la password generata
-    //     return $password;
-    // }
+// inizializzo la sessione
+    // open session
+    session_start();
 
     // verifica della lunghezza della password settata
 
@@ -48,20 +27,19 @@ include 'function.php';
 
         // creiamo una condizione di controllo se la password e maggiore uguale a 8 o minore uguale a 32 genera altrimenti errore
 
-        if($passwordLength> 0){
-            if($passwordLength >= 8 && $passwordLength <=32){
-                $generatedPassword =  CreateRandomPassword($passwordLength);
-                // altrimenti text errore
-            } else{
-                $error='La lunghezza della password deve avere tot caratteri compresi fra 8 e 32';
-
-            }
-
-        } else {
+        if(isset($_GET['length'])){
+            if(validatePasswordLength($passwordLength)){
+                $generatedPassword = CreateRandomPassword($passwordLength);
+                // memorizzare i dati della password generata
+                $_SESSION['generated_password'] = $generatedPassword;
+                header('location: password_page.php');
+                exit();
+            } else {
             $error = 'Per favore, inserisci un valore valido per la lunghezza della password.';
             // controllo su password generata
             // var_dump($generatedPassword);
         }
+    }
 
 ?>
 

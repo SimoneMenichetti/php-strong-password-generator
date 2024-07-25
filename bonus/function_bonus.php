@@ -30,4 +30,9 @@
         return $password;
     }
 
+    // Funzione per validare la lunghezza della password
+    function validatePasswordLength($length) {
+        return ($length >= 8 && $length <= 32);
+    }
+
 ?>
