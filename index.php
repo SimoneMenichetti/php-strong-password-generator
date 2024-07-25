@@ -24,6 +24,8 @@
                                 <label for="length">Lunghezza della password:</label>
                                 <!-- inserimento input -->
                                 <input type="submit" class='btn btn-primary' value='Genera la password'>
+                                <!-- input reset form -->
+                                 <input type="reset" class='btn btn-warning' value='annulla'>
                             </div>
                         </form>
                     </div>
