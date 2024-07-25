@@ -10,7 +10,7 @@
         $charactersLength = strlen($characters);
 
         // inseriamo un controllo della lunghezza dei caratteri 
-        var_dump($charactersLength);
+        // var_dump($charactersLength);
 
         // inizializiamo un ciclo for per generare casualmente la password
 
@@ -18,12 +18,12 @@
             // utilizziamo rand per dare un valore minimo ed un massimo x i caratteri casuali da selezionare
             $randomI=rand(0,$charactersLength-1);
             // controllo del valore var indice random
-            var_dumb($randomI);
+            // var_dump($randomI);
 
-            $password.= $characters[$randomI];
+            $password .= $characters[$randomI];
 
             // controllo password
-            var_dump($password);
+            // var_dump($password);
         }
 
         // ritorniamo la password generata
@@ -31,7 +31,34 @@
     }
 
     // verifica della lunghezza della password settata
-    
+
+    $passwordLength=isset($_GET['length']) ? intval($_GET['length']) : 0;
+
+    // utilizziamo un controllo della pass inserita per la lunghezza
+        // var_dump($passwordLength);
+
+        $generatedPassword='';
+      
+        // errore
+        $error='';
+
+        // creiamo una condizione di controllo se la password e maggiore uguale a 8 o minore uguale a 32 genera altrimenti errore
+
+        if($passwordLength> 0){
+            if($passwordLength >= 8 && $passwordLength <=32){
+                $generatedPassword =  CreateRandomPassword($passwordLength);
+                // altrimenti text errore
+            } else{
+                $error='La lunghezza della password deve avere tot caratteri compresi fra 8 e 32';
+
+            }
+
+        } else {
+            $error = 'Per favore, inserisci un valore valido per la lunghezza della password.';
+            // controllo su password generata
+            // var_dump($generatedPassword);
+        }
+
 ?>
 
 <!DOCTYPE html>
@@ -50,24 +77,35 @@
                 <div class='card mt-5'>
                     <div class='card-body'>
                         <h1 class='card-title text-center'>Generatore di Password casuali PHP</h1>
-                        <!-- creazione form  action  con processo in GET -->
+                        <!-- Creazione form action con processo in GET -->
                         <form action="" method='GET'>
                             <div class='form-group'>
-                               <label for="length">Lunghezza Password:</label>
-                                <!-- inserito un input minimo e max di lughezza -->
-                                <input type="number" class='form-control' id='lenght' name='lenght' min='8' max='32' required><br>
+                                <label for="length">Inserisci il numero della lunghezza Password:</label>
+                                <!-- Inserito un input minimo e max di lunghezza -->
+                                <input type="number" class='form-control' id='length' name='length' min='8' max='32' required><br>
                                 <div class="text-center">
-                                    <!-- inserimento input -->
+                                    <!-- Inserimento input -->
                                     <input type="submit" class='btn btn-primary' value='Genera la password'>
-                                    <!-- input reset form -->
+                                    <!-- Input reset form -->
                                     <input type="reset" class='btn btn-warning' value='annulla'>
-                                </div>  
+                                </div>
                             </div>
                         </form>
+
+                        <?php if ($error): ?>
+                            <div class="alert alert-danger mt-3 text-center">
+                                <?php echo htmlspecialchars($error); ?>
+                            </div>
+                        <?php elseif ($generatedPassword): ?>
+                            <div class="alert alert-success mt-3 text-center">
+                                <strong>Password Generata:</strong> <?php echo htmlspecialchars($generatedPassword); ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+</html>
 </html>
